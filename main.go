@@ -33,12 +33,12 @@ func main(){
             if event.Type == linebot.EventTypeMessage {
                 switch message := event.Message.(type) {
                 case *linebot.TextMessage:
-                    fmt.Printf("%v", message)
+                    log.Printf("%v", message)
                     if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
                         log.Print(err)
                     }
                 case *linebot.StickerMessage:
-                    fmt.Printf("Sticker: %v", message)
+                    log.Printf("Sticker: %v", message)
                     if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewStickerMessage("1","1")).Do(); err != nil{
                         log.Print(err)
                 }
