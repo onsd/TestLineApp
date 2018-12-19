@@ -13,7 +13,7 @@ func main(){
         os.Getenv("ChannelSecret"),
         os.Getenv("AccessToken"),
         )
-
+    //err
     if err != nil{
         log.Fatalf("Error at linebot.new: %v",err)
     }
