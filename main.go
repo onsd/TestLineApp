@@ -8,7 +8,6 @@ import (
     "net/http"
     "os"
     "regexp"
-    "strconv"
     "time"
 )
 
@@ -47,8 +46,8 @@ func main(){
                     re, _ = regexp.Compile(`.*占い.*`)
                     if re.MatchString(message.Text){
                         rand.Seed(time.Now().UnixNano())
-                        r := rand.Intn(10) * 10
-                        content := "あなたの運勢は" + strconv.Itoa(r) + "%!"
+                        luck := []string{"大凶","凶","末吉","小吉","中吉","吉","大吉"}
+                        content := "あなたの運勢は" + luck[rand.Intn(7)] + "!"
                         if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(content)).Do(); err != nil {
                             log.Print(err)
                         }
