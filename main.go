@@ -41,6 +41,7 @@ func main(){
                     if re.MatchString(message.Text){
                         if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("こんにちは！")).Do(); err != nil {
                             log.Print(err)
+                            return
                         }
                     }
                     re, _ = regexp.Compile(`.*占い.*`)
@@ -50,7 +51,11 @@ func main(){
                         content := "あなたの運勢は" + luck[rand.Intn(7)] + "!"
                         if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(content)).Do(); err != nil {
                             log.Print(err)
+                            return
                         }
+                    }
+                    if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil{
+                        log.Print(err)
                     }
                 case *linebot.StickerMessage:
                     log.Printf("Sticker: %v", message)
