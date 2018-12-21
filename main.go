@@ -6,6 +6,7 @@ import (
     "log"
     "net/http"
     "os"
+    "regexp"
 )
 
 func main(){
@@ -34,8 +35,15 @@ func main(){
                 switch message := event.Message.(type) {
                 case *linebot.TextMessage:
                     log.Printf("%v", message)
-                    if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
-                        log.Print(err)
+                    re,_ := regexp.Compile(`.*こんにちは.*`)
+                    if re.MatchString(message.Text){
+                        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("こんにちは！")).Do(); err != nil {
+                            log.Print(err)
+                        }
+                    }else{
+                        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("挨拶してね！")).Do(); err != nil {
+                            log.Print(err)
+                        }
                     }
                 case *linebot.StickerMessage:
                     log.Printf("Sticker: %v", message)
