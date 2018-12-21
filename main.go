@@ -4,9 +4,12 @@ import (
     "fmt"
     "github.com/line/line-bot-sdk-go/linebot"
     "log"
+    "math/rand"
     "net/http"
     "os"
     "regexp"
+    "strconv"
+    "time"
 )
 
 func main(){
@@ -40,8 +43,13 @@ func main(){
                         if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("こんにちは！")).Do(); err != nil {
                             log.Print(err)
                         }
-                    }else{
-                        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("挨拶してね！")).Do(); err != nil {
+                    }
+                    re, _ = regexp.Compile(`.*占い.*`)
+                    if re.MatchString(message.Text){
+                        rand.Seed(time.Now().UnixNano())
+                        r := rand.Intn(10) * 10
+                        content := "あなたの運勢は" + strconv.Itoa(r) + "%!"
+                        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(content)).Do(); err != nil {
                             log.Print(err)
                         }
                     }
